@@ -25,7 +25,14 @@ namespace Users
                 option.UseSqlServer(
                     Configuration["Data:SportStoreIdentity:ConnectionString"]));
 
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>(opt =>
+                {
+                    opt.Password.RequireNonAlphanumeric = false;
+                    opt.Password.RequireLowercase = false;
+                    opt.Password.RequireUppercase = false;
+                    opt.Password.RequiredLength = 4;
+                    opt.Password.RequireDigit = false;
+                })
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
